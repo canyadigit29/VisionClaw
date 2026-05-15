@@ -21,6 +21,10 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Remove local Android Studio Java path
+        working-directory: samples/CameraAccessAndroid
+        run: sed -i '/^org\.gradle\.java\.home=/d' gradle.properties
+
       - name: Make Gradle wrapper executable
         working-directory: samples/CameraAccessAndroid
         run: chmod +x ./gradlew

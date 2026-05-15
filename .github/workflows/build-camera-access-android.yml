@@ -25,6 +25,22 @@ jobs:
         working-directory: samples/CameraAccessAndroid
         run: sed -i '/^org\.gradle\.java\.home=/d' gradle.properties
 
+      - name: Generate Secrets.kt
+        working-directory: samples/CameraAccessAndroid
+        run: |
+          cat > app/src/main/java/com/meta/wearable/dat/externalsampleapps/cameraaccess/Secrets.kt <<'EOF'
+          package com.meta.wearable.dat.externalsampleapps.cameraaccess
+
+          object Secrets {
+              const val geminiAPIKey = "${{ secrets.GEMINI_API_KEY }}"
+              const val openClawHost = "http://127.0.0.1"
+              const val openClawPort = 18789
+              const val openClawHookToken = "${{ secrets.OPENCLAW_HOOK_TOKEN }}"
+              const val openClawGatewayToken = "${{ secrets.OPENCLAW_GATEWAY_TOKEN }}"
+              const val webrtcSignalingURL = ""
+          }
+          EOF
+
       - name: Make Gradle wrapper executable
         working-directory: samples/CameraAccessAndroid
         run: chmod +x ./gradlew
